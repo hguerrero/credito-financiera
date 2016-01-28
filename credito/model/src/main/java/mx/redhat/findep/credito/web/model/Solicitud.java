@@ -13,6 +13,9 @@ public class Solicitud implements Serializable
 	private Set<Cliente> clientes;
 	private Double monto;
 	private String resultado;
+	private String nombreGrupo;
+	private String tipoRevision;
+	private String estatusSolicitud;
 	
 	public Long getId() {
 		return id;
@@ -37,6 +40,24 @@ public class Solicitud implements Serializable
 	}
 	public void setResultado(String resultado) {
 		this.resultado = resultado;
+	}
+	public String getNombreGrupo() {
+		return nombreGrupo;
+	}
+	public void setNombreGrupo(String nombreGrupo) {
+		this.nombreGrupo = nombreGrupo;
+	}
+	public String getTipoRevision() {
+		return tipoRevision;
+	}
+	public void setTipoRevision(String tipoRevision) {
+		this.tipoRevision = tipoRevision;
+	}
+	public String getEstatusSolicitud() {
+		return estatusSolicitud;
+	}
+	public void setEstatusSolicitud(String estatusSolicitud) {
+		this.estatusSolicitud = estatusSolicitud;
 	}
 
 }
