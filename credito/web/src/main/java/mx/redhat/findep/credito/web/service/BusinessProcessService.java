@@ -18,7 +18,9 @@ package mx.redhat.findep.credito.web.service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -32,8 +34,11 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.audit.AuditService;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
+import org.kie.api.task.model.Task;
+import org.kie.api.task.model.TaskSummary;
 import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
 
+import mx.redhat.findep.credito.web.model.AnalisisPendientes;
 import mx.redhat.findep.credito.web.model.Solicitud;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
@@ -55,7 +60,7 @@ public class BusinessProcessService {
 	private final String USERNAME = "bpmsAdmin";
 	private final String PASSWORD = "Redhat1!";
 	private final String PROCESS_ID = "findep.credito";
-	private final String SERVER_URL = "http://localhost:8081/business-central";
+	private final String SERVER_URL = "http://192.168.1.89:8081/business-central";
 	
 	// BPM Suite classes
 	private RuntimeEngine engine;
@@ -95,5 +100,41 @@ public class BusinessProcessService {
         log.info("Application process started with ID: " + solicitud.getId());
         
         return solicitud;
+    }
+    
+    public List<AnalisisPendientes> getTasks(String user) throws Exception
+    {
+		RuntimeEngine engine = RemoteRuntimeEngineFactory.newRestBuilder()
+				.addDeploymentId(DEPLOYMENT_ID)
+				.addUserName(user)
+				.addPassword(PASSWORD)
+				.addUrl(new URL(SERVER_URL))
+				.addExtraJaxbClasses(Solicitud.class)
+				.build();
+		
+		TaskService taskService = engine.getTaskService();
+		
+		List<TaskSummary> tasks = taskService.getTasksOwned(user, "en-us");
+		
+		System.out.println(tasks.size());
+		
+		List<AnalisisPendientes> pendientes = new ArrayList<AnalisisPendientes>();
+		
+		AnalisisPendientes ap = null;
+		
+		for (TaskSummary tsummary : tasks) 
+		{
+			Long taskId = tsummary.getId();
+			
+			ap = new AnalisisPendientes();
+			ap.setId(taskId);
+			ap.setNombre(tsummary.getName());
+			
+			pendientes.add(ap);
+			
+			System.out.println(ap.getId() + " => " + ap.getNombre());
+		}
+	
+		return pendientes;
     }
 }
