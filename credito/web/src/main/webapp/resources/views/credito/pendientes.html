@@ -1,0 +1,19 @@
+<div>
+    <h3>Solicitudes Pendientes de Revision</h3>
+	<div class="table-responsive">
+	 <table class="table table-responsive table-bordered table-striped clearfix">
+	   <thead class="thead-default">
+	     <tr>
+	       <th>Id Pendiente</th>
+	       <th>Nombre</th>
+	     </tr>
+	   </thead>
+	   <tbody>
+	     <tr data-ng-repeat="s in solicitudes">
+	       <td><a href="#/Solicitud">{{ s.id }}</a></td>
+	       <td><a href="#/Solicitud">{{ s.nombre }}</a></td>
+	     </tr>
+	   </tbody>
+	 </table>
+	</div>
+</div>

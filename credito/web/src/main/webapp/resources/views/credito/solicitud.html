@@ -1,0 +1,77 @@
+<div>
+<h3>Detalle de la Solicitud</h3>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+	 <form class="form-inline" role="form">
+		<div class="row">
+	  		<div class="col-md-6 col-lg-6">
+		  		<div class="form-group">
+				    <label for="solicitud">Solicitud:  {{solicitud.id}}</label>
+				</div>
+	  		</div>
+	  		<div class="col-md-6 col-lg-6 text-right">
+			  <div class="form-group">
+			    <label for="grupo">Grupo:  {{solicitud.nombreGrupo}}</label>
+			  </div>
+	  		</div>
+	 	</div>
+	</form>  	
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+  		<hr>
+  	</div>
+  </div>
+  <div class="col-md-12 col-lg-12">
+	  		<p class="text-info bg-success text-center"><strong>Tipo Revision: {{ solicitud.tipoRevision }}</strong></p>  		
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+  		<hr>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+  		<div class="table-responsive">
+	  		<table class="table table-responsive table-bordered table-striped clearfix">
+		    <thead class="thead-default">
+		      <tr>
+		        <th>Id Cliente</th>
+		        <th>Nombre Cliente</th>
+		        <th>Monto Solicitado</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr data-ng-repeat="c in solicitud.clientes">
+		        <td>{{ c.id }}</td>
+		        <td>{{ c.nombre }}</td>
+		        <td>{{ c.monto | currency:"$":2 }}</td>
+		      </tr>
+		    </tbody>
+		  </table>
+	  </div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+	  <p class="text-primary text-center"><strong>Monto Total Solicitud: {{ solicitud.monto | currency:"$":2}}</strong></p>  		
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+  		<hr>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-4 col-lg-4">
+	  <button type="button" class="btn btn-lg btn-success center-block" data-ng-click="initProcess()">Autorizar</button>  	
+	</div>
+  	<div class="col-md-4 col-lg-4">
+	  <button type="button" class="btn btn-lg btn-danger center-block" data-ng-click="initProcess()">Rechazar</button>  
+	 </div>
+	 <div class="col-md-4 col-lg-4">
+	  <button type="button" class="btn btn-lg btn-info center-block" data-ng-click="initProcess()">Posponer</button>  
+	 </div>
+  </div>
+</div>

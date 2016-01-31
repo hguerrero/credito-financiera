@@ -22,12 +22,3 @@ app.controller('CapturaController', ['$scope', '$http', function($scope, $http)
     };
 }]);
 
-app.controller('pendientesCtrl', function($scope, $http) 
-{
-    $scope.solicitudes = [];
-
-    $http.get("/credito-web/rest/credito/pendientes/analistajr")
-    .then(function(response){
-        $scope.solicitudes = response.data;
-    });
-});

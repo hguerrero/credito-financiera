@@ -36,43 +36,26 @@
 	        </div>
 	    </div>
     </form>
+	<hr>
+	<div class="table-responsive">
+		<table class="table table-responsive table-bordered table-striped clearfix">
+	   <thead class="thead-default">
+	     <tr>
+	       <th>Id Cliente</th>
+	       <th>Nombre Cliente</th>
+	       <th>Monto Solicitado</th>
+	     </tr>
+	   </thead>
+	   <tbody>
+	     <tr data-ng-repeat="c in solicitud.clientes">
+	       <td>{{ c.id }}</td>
+	       <td>{{ c.nombre }}</td>
+	       <td>{{ c.monto | currency:"$":2 }}</td>
+	     </tr>
+	   </tbody>
+	 </table>
+	</div>
+	<p class="text-primary text-center"><strong>Monto Total Solicitud: {{ solicitud.monto | currency:"$":2}}</strong></p>  		
+	<hr>
+	<button type="button" class="btn btn-lg btn-success center-block" data-ng-click="initProcess()">Iniciar Flujo</button>  		
 </div>
-  
-  
-  <div class="row">
-  	<div class="col-md-12 col-lg-12">
-  		<hr>
-  	</div>
-  </div>
-  <div class="row">
-  	<div class="col-md-12 col-lg-12">
-  		<div class="table-responsive">
-	  		<table class="table table-responsive table-bordered table-striped clearfix">
-		    <thead class="thead-default">
-		      <tr>
-		        <th>Id Cliente</th>
-		        <th>Nombre Cliente</th>
-		        <th>Monto Solicitado</th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		      <tr data-ng-repeat="c in solicitud.clientes">
-		        <td>{{ c.id }}</td>
-		        <td>{{ c.nombre }}</td>
-		        <td>{{ c.monto | currency:"$":2 }}</td>
-		      </tr>
-		    </tbody>
-		  </table>
-	  </div>
-  	</div>
-  </div>
-  <div class="row">
-  	<div class="col-md-12 col-lg-12">
-	  <p class="text-primary text-center"><strong>Monto Total Solicitud: {{ solicitud.monto | currency:"$":2}}</strong></p>  		
-  	</div>
-  </div>
-  <div class="row">
-  	<div class="col-md-12 col-lg-12">
-	  <button type="button" class="btn btn btn-success center-block" data-ng-click="initProcess()">Iniciar Flujo</button>  		
-  	</div>
-  </div>
