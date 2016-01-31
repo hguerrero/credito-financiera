@@ -105,39 +105,13 @@
 	  <button type="button" class="btn btn-lg btn-success center-block" data-ng-click="initProcess()">Iniciar Flujo</button>  		
   	</div>
   </div>
-</div>data
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
-
-<script>
-var app = angular.module('creditoApp', []);
-app.controller('capturaCtrl', function($scope, $http) 
-{
-    $scope.clientes = [ { id: "01", nombre: "Francisco Rocha", monto:20000 },
-                        { id: "02", nombre: "Juan Perez", monto:50000 } ];
-
-    $scope.monto_solicitud = _.reduce($scope.clientes, function(memo, cliente){ return memo + cliente.monto; }, 0);
-
-    $scope.cliente = {};
-
-    $scope.add = function() {
-        var object = $scope.cliente;
-        $scope.monto_solicitud += parseFloat(object.monto);
-        $scope.clientes.push( _.clone(object) );
-        $scope.cliente = {};
-    };
-
-    $scope.initProcess = function() {
-        var solicitud = { id : '', clientes : $scope.clientes, monto: $scope.monto_solicitud };
-        $http.post("/credito-web/rest/credito/", solicitud)
-        .then(function(response){
-        });
-    };
-});
-</script>
+<script src="resources/scripts/main.js"></script>
 
 </body>
 </html>

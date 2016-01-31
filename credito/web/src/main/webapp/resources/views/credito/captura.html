@@ -1,0 +1,78 @@
+<div>
+    <h3>Capturar Solicitud</h3>
+    <form id="Solicitud" class="form-horizontal"> 
+   		<div class="form-group" style="margin-bottom: 0px">
+   			<div class="form-inline col-sm-12">
+			    <label class="control-label" for="solicitud">Solicitud:</label>
+			    <input type="text" class="form-control" style="width: 305px" id="solicitud" placeholder="Ingrese numero de solicitud" data-ng-model="solicitud.id">
+				<label class="control-label" for="grupo">Grupo:</label>
+			   	<input type="text" class="form-control" style="width: 305px" id="grupo" placeholder="Ingrese descripcion del grupo" data-ng-model="solicitud.grupo">
+		   	</div>
+		</div>
+		<div class="col-sm-12">
+			<hr/>
+		</div>
+ 		<div class="form-group">
+			<label class="control-label col-sm-2" for="id">Id Cliente:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="id" placeholder="Ingrese identificador del cliente" data-ng-model="cliente.id">
+			</div>
+		</div>
+ 			<div class="form-group">
+			<label class="control-label col-sm-2" for="nombre">Nombre Cliente:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id=nombre placeholder="Ingrese nombre del cliente" data-ng-model="cliente.nombre">
+			</div>
+		</div>
+ 			<div class="form-group">
+			<label class="control-label col-sm-2" for="monto">Monto Solicitado ($):</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="monto" placeholder="Ingrese monto solicitado en pesos" data-ng-model="cliente.monto">
+			</div>
+		</div>
+	    <div class="form-group">
+	        <div class="col-md-offset-2 col-sm-10">
+	            <button id="Add" class="btn btn-primary" data-ng-click="add()"><span class="glyphicon glyphicon-plus"></span> Agregar Cliente</button>
+	        </div>
+	    </div>
+    </form>
+</div>
+  
+  
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+  		<hr>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+  		<div class="table-responsive">
+	  		<table class="table table-responsive table-bordered table-striped clearfix">
+		    <thead class="thead-default">
+		      <tr>
+		        <th>Id Cliente</th>
+		        <th>Nombre Cliente</th>
+		        <th>Monto Solicitado</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr data-ng-repeat="c in solicitud.clientes">
+		        <td>{{ c.id }}</td>
+		        <td>{{ c.nombre }}</td>
+		        <td>{{ c.monto | currency:"$":2 }}</td>
+		      </tr>
+		    </tbody>
+		  </table>
+	  </div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+	  <p class="text-primary text-center"><strong>Monto Total Solicitud: {{ solicitud.monto | currency:"$":2}}</strong></p>  		
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-12 col-lg-12">
+	  <button type="button" class="btn btn btn-success center-block" data-ng-click="initProcess()">Iniciar Flujo</button>  		
+  	</div>
+  </div>
