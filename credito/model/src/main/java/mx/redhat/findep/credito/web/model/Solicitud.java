@@ -12,10 +12,9 @@ public class Solicitud implements Serializable
 	private Long id;
 	private Set<Cliente> clientes;
 	private Double monto;
-	private String resultado;
-	private String nombreGrupo;
-	private String tipoRevision;
-	private String estatusSolicitud;
+	private String tipoRevisor;
+	private String grupo;
+	private String estatus;
 	
 	public Long getId() {
 		return id;
@@ -35,29 +34,23 @@ public class Solicitud implements Serializable
 	public void setMonto(Double monto) {
 		this.monto = monto;
 	}
-	public String getResultado() {
-		return resultado;
+	public String getTipoRevisor() {
+		return tipoRevisor;
 	}
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
+	public void setTipoRevisor(String tipoRevisor) {
+		this.tipoRevisor = tipoRevisor;
 	}
-	public String getNombreGrupo() {
-		return nombreGrupo;
+	public String getGrupo() {
+		return grupo;
 	}
-	public void setNombreGrupo(String nombreGrupo) {
-		this.nombreGrupo = nombreGrupo;
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
 	}
-	public String getTipoRevision() {
-		return tipoRevision;
+	public String getEstatus() {
+		return estatus;
 	}
-	public void setTipoRevision(String tipoRevision) {
-		this.tipoRevision = tipoRevision;
-	}
-	public String getEstatusSolicitud() {
-		return estatusSolicitud;
-	}
-	public void setEstatusSolicitud(String estatusSolicitud) {
-		this.estatusSolicitud = estatusSolicitud;
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
 	}
 
 }
