@@ -6,11 +6,8 @@ app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
       .when('/',{templateUrl:'resources/views/landing.html',controller:'LandingPageController'})
       .when('/Captura',{templateUrl:'resources/views/credito/captura.html',controller:'CapturaController'})
-      .when('/Solicitud',{templateUrl:'resources/views/credito/solicitud.html',controller:'SolicitudController'})
+      .when('/Solicitud/:solicitud',{templateUrl:'resources/views/credito/solicitud.html',controller:'SolicitudController'})
       .when('/Pendientes',{templateUrl:'resources/views/credito/pendientes.html',controller:'PendientesController'})
-      .when('/Members',{templateUrl:'resources/views/Member/search.html',controller:'SearchMemberController'})
-      .when('/Members/new',{templateUrl:'resources/views/Member/detail.html',controller:'NewMemberController'})
-      .when('/Members/edit/:MemberId',{templateUrl:'resources/views/Member/detail.html',controller:'EditMemberController'})
       .otherwise({
         redirectTo: '/'
       });

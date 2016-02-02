@@ -4,14 +4,14 @@
 	 <table class="table table-responsive table-bordered table-striped clearfix">
 	   <thead class="thead-default">
 	     <tr>
-	       <th>Id Pendiente</th>
-	       <th>Nombre</th>
+	       <th>Solicitud</th>
+	       <th>Monto</th>
 	     </tr>
 	   </thead>
 	   <tbody>
 	     <tr data-ng-repeat="s in solicitudes">
-	       <td><a href="#/Solicitud">{{ s.id }}</a></td>
-	       <td><a href="#/Solicitud">{{ s.nombre }}</a></td>
+	       <td><a href="#/Solicitud/{{ s.solicitud }}">{{ s.solicitud }}</a></td>
+	       <td><a href="#/Solicitud/{{ s.solicitud }}">{{ s.monto | currency:"$":2}}</a></td>
 	     </tr>
 	   </tbody>
 	 </table>

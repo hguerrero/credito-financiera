@@ -6,7 +6,7 @@ app.controller('PendientesController', ['$scope', '$http', function($scope, $htt
 {
     $scope.solicitudes = [];
 
-    $http.get("/credito-web/rest/credito/pendientes/analistajr")
+    $http.get("/credito-web/rest/credito/pendientes/user1")
     .then(function(response){
         $scope.solicitudes = response.data;
     });

@@ -2,8 +2,10 @@
 
 var app = angular.module('credito-financiera');
 
-app.controller('SolicitudController', ['$scope', '$http', function($scope, $http) 
+app.controller('SolicitudController', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) 
 {
+	$scope.params = $routeParams;
+	
 	var solicitud = { id : '123456', 
 			  nombreGrupo : "PRUEBA JBPM",
 			  tipoRevision : "ANALISTA JR",
@@ -13,6 +15,10 @@ app.controller('SolicitudController', ['$scope', '$http', function($scope, $http
            };
 
 	$scope.solicitud = solicitud;
-
+	
+	$http.get("/credito-web/rest/credito/solicitud/" + $scope.params.solicitud)
+    .then(function(response){
+        $scope.solicitud = response.data;
+    });
 }]);
 

@@ -40,7 +40,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import mx.redhat.findep.credito.web.data.SolicitudRepository;
-import mx.redhat.findep.credito.web.model.AnalisisPendientes;
+import mx.redhat.findep.credito.web.model.Pendiente;
+import mx.redhat.findep.credito.web.model.Cliente;
 import mx.redhat.findep.credito.web.model.Solicitud;
 import mx.redhat.findep.credito.web.service.BusinessProcessService;
 
@@ -67,9 +68,9 @@ public class CreditoRESTService {
     @GET
     @Path("/pendientes/{user}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<AnalisisPendientes> getSolicitudes(@PathParam(value = "user") String user)
+    public List<Pendiente> getTasks(@PathParam(value = "user") String user)
     {
-    	List<AnalisisPendientes> pendientes = new ArrayList<AnalisisPendientes>();
+    	List<Pendiente> pendientes = new ArrayList<Pendiente>();
     	
     	try 
     	{
@@ -85,6 +86,30 @@ public class CreditoRESTService {
     	return pendientes;
     }
     
+    @GET
+    @Path("/solicitud/{applicationKey}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getApplication(@PathParam(value = "applicationKey") String key)
+    {
+    	Response.ResponseBuilder builder = null;
+    	
+    	try 
+    	{
+			Solicitud solicitud = bpmService.getApplication(key);
+			
+			// Create an "ok" response
+    		builder = Response.ok(solicitud);
+			
+		} catch (Exception e) {
+    		// Handle generic exceptions
+    		Map<String, String> responseObj = new HashMap<String, String>();
+    		responseObj.put("error", e.getMessage());
+    		builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+    	
+    	return builder.build();
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -96,6 +121,10 @@ public class CreditoRESTService {
     	{
     		// Validates solicitud using bean validation
     		log.info("post");
+    		
+    		for (Cliente c : solicitud.getClientes()) {
+    			c.setSolicitud(solicitud);
+    		}
     		
 //    		validateSolicitud(solicitud);
     		
@@ -121,23 +150,6 @@ public class CreditoRESTService {
 
     	return builder.build();
     }
-
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<Member> listAllMembers() {
-//        return repository.findAllOrderedByName();
-//    }
-
-//    @GET
-//    @Path("/{id:[0-9][0-9]*}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Member lookupMemberById(@PathParam("id") long id) {
-//        Member member = repository.findById(id);
-//        if (member == null) {
-//            throw new WebApplicationException(Response.Status.NOT_FOUND);
-//        }
-//        return member;
-//    }
 
     /**
      * <p>

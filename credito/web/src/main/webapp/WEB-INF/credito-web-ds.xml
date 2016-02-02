@@ -27,11 +27,11 @@
     <datasource jndi-name="java:jboss/datasources/credito-webDS"
         pool-name="credito-web" enabled="true"
         use-java-context="true">
-        <connection-url>jdbc:h2:mem:credito-web;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>
-        <driver>h2</driver>
+        <connection-url>jdbc:postgresql:jbpm</connection-url>
+        <driver>postgresql</driver>
         <security>
-            <user-name>sa</user-name>
-            <password>sa</password>
+            <user-name>postgres</user-name>
+            <password>postgres</password>
         </security>
     </datasource>
 </datasources>

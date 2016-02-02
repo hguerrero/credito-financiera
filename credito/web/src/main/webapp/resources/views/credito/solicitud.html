@@ -1,17 +1,17 @@
 <div>
-<h3>Detalle de la Solicitud</h3>
+<h3>Detalle de la Solicitud: {{ params.solicitud }}</h3>
   <div class="row">
   	<div class="col-md-12 col-lg-12">
 	 <form class="form-inline" role="form">
 		<div class="row">
 	  		<div class="col-md-6 col-lg-6">
 		  		<div class="form-group">
-				    <label for="solicitud">Solicitud:  {{solicitud.id}}</label>
+				    <label for="solicitud">Solicitud:  {{solicitud.solicitud}}</label>
 				</div>
 	  		</div>
 	  		<div class="col-md-6 col-lg-6 text-right">
 			  <div class="form-group">
-			    <label for="grupo">Grupo:  {{solicitud.nombreGrupo}}</label>
+			    <label for="grupo">Grupo:  {{solicitud.grupo}}</label>
 			  </div>
 	  		</div>
 	 	</div>
@@ -24,7 +24,7 @@
   	</div>
   </div>
   <div class="col-md-12 col-lg-12">
-	  		<p class="text-info bg-success text-center"><strong>Tipo Revision: {{ solicitud.tipoRevision }}</strong></p>  		
+	  		<p class="text-info bg-success text-center"><strong>Tipo Revision: {{ solicitud.tipoRevisor }}</strong></p>  		
   </div>
   <div class="row">
   	<div class="col-md-12 col-lg-12">
@@ -44,7 +44,7 @@
 		    </thead>
 		    <tbody>
 		      <tr data-ng-repeat="c in solicitud.clientes">
-		        <td>{{ c.id }}</td>
+		        <td>{{ c.cliente }}</td>
 		        <td>{{ c.nombre }}</td>
 		        <td>{{ c.monto | currency:"$":2 }}</td>
 		      </tr>

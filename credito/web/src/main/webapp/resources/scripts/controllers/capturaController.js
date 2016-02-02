@@ -4,7 +4,7 @@ var app = angular.module('credito-financiera');
 
 app.controller('CapturaController', ['$scope', '$http', function($scope, $http) 
 {
-	$scope.solicitud = { id: '', clientes : [], monto: 0, tipoRevisor: '', grupo: '', estatus: ''};
+	$scope.solicitud = { id: '', solicitud: '', clientes : [], monto: 0, tipoRevisor: '', grupo: '', estatus: 'NEW'};
 	
     $scope.cliente = {};
 

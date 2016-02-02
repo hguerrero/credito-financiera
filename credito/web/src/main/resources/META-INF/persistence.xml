@@ -26,9 +26,10 @@
       <!-- The datasource is deployed as WEB-INF/credito-web-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/credito-web-ds.xml -->
       <jta-data-source>java:jboss/datasources/credito-webDS</jta-data-source>
+      <class>mx.redhat.findep.credito.web.model.Solicitud</class>
+      <class>mx.redhat.findep.credito.web.model.Cliente</class>
       <properties>
          <!-- Properties for Hibernate -->
-         <property name="hibernate.hbm2ddl.auto" value="create-drop" />
          <property name="hibernate.show_sql" value="false" />
       </properties>
    </persistence-unit>

@@ -28,17 +28,23 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.VariableInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
-import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.remote.client.api.RemoteRuntimeEngineFactory;
 
-import mx.redhat.findep.credito.web.model.AnalisisPendientes;
+import mx.redhat.findep.credito.web.model.Pendiente;
 import mx.redhat.findep.credito.web.model.Solicitud;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
@@ -55,12 +61,15 @@ public class BusinessProcessService {
     private Event<Solicitud> solicitudEventSrc;
     
     // BPM Suite Process and Project constants
+    private final String P_APPLICATION_ID = "solicitud_id";
     private final String P_APPLICATION = "solicitud";
+    private final String P_AMOUNT = "monto";
+    private final String P_CLIENT_LIST = "clientes_list";
     private final String DEPLOYMENT_ID = "mx.com.findep:process-model:1.0";
 	private final String USERNAME = "bpmsAdmin";
 	private final String PASSWORD = "Redhat1!";
 	private final String PROCESS_ID = "findep.credito";
-	private final String SERVER_URL = "http://192.168.1.89:8081/business-central";
+	private final String SERVER_URL = "http://localhost:8081/business-central";
 	
 	// BPM Suite classes
 	private RuntimeEngine engine;
@@ -86,15 +95,16 @@ public class BusinessProcessService {
     {
         log.info("Processing application.");
         
-//        em.persist(solicitud);
         Map<String, Object> params = new HashMap<String, Object>();
         
+//        params.put(P_APPLICATION_ID, solicitud.getId());
 		params.put(P_APPLICATION, solicitud);
+		params.put(P_CLIENT_LIST, solicitud.getClientes());
 		
 		ProcessInstance instance = ksession.startProcess(PROCESS_ID, params);
 		
 		solicitud.setId(instance.getId());
-        
+		
         solicitudEventSrc.fire(solicitud);
         
         log.info("Application process started with ID: " + solicitud.getId());
@@ -102,8 +112,10 @@ public class BusinessProcessService {
         return solicitud;
     }
     
-    public List<AnalisisPendientes> getTasks(String user) throws Exception
+    public List<Pendiente> getTasks(String user) throws Exception
     {
+    	log.info("Getting Tasks.");
+    	
 		RuntimeEngine engine = RemoteRuntimeEngineFactory.newRestBuilder()
 				.addDeploymentId(DEPLOYMENT_ID)
 				.addUserName(user)
@@ -114,27 +126,56 @@ public class BusinessProcessService {
 		
 		TaskService taskService = engine.getTaskService();
 		
-		List<TaskSummary> tasks = taskService.getTasksOwned(user, "en-us");
+		List<TaskSummary> tasks = taskService.getTasksAssignedAsPotentialOwner(user, "en-us");
 		
 		System.out.println(tasks.size());
 		
-		List<AnalisisPendientes> pendientes = new ArrayList<AnalisisPendientes>();
+		List<Pendiente> pendientes = new ArrayList<Pendiente>();
 		
-		AnalisisPendientes ap = null;
+		Pendiente ap = null;
 		
 		for (TaskSummary tsummary : tasks) 
 		{
-			Long taskId = tsummary.getId();
+			ap = new Pendiente();
 			
-			ap = new AnalisisPendientes();
-			ap.setId(taskId);
-			ap.setNombre(tsummary.getName());
+			ap.setSolicitud(getVariableValue(tsummary.getProcessInstanceId(), P_APPLICATION_ID));
+			ap.setMonto(getVariableValue(tsummary.getProcessInstanceId(), P_AMOUNT));;
 			
 			pendientes.add(ap);
-			
-			System.out.println(ap.getId() + " => " + ap.getNombre());
 		}
 	
 		return pendientes;
+    }
+
+    public Solicitud getApplication(String applicationKey) 
+    {
+    	log.info("Retrieving application.");
+    	
+    	CriteriaBuilder cb = em.getCriteriaBuilder();
+    	
+    	CriteriaQuery<Solicitud> cq = cb.createQuery(Solicitud.class);
+    	
+    	Root<Solicitud> application = cq.from(Solicitud.class);
+    	
+    	ParameterExpression<String> p = cb.parameter(String.class);
+    	
+    	cq.select(application).where(cb.equal(application.get("solicitud"), p));
+    	
+    	TypedQuery<Solicitud> tq = em.createQuery(cq);
+    	
+    	tq.setParameter(p, applicationKey);
+    	
+    	Solicitud solicitud = tq.getSingleResult();
+    	
+    	return solicitud;
+    }
+    
+    private String getVariableValue(long piid, String varName) 
+    {
+        String value = null;
+        List<? extends VariableInstanceLog> variables = auditService.findVariableInstances(piid, varName);
+        if (variables.size() > 0)
+            value = variables.get(0).getValue();
+        return value;
     }
 }

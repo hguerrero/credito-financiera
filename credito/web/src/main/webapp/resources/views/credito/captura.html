@@ -4,7 +4,7 @@
    		<div class="form-group" style="margin-bottom: 0px">
    			<div class="form-inline col-sm-12">
 			    <label class="control-label" for="solicitud">Solicitud:</label>
-			    <input type="text" class="form-control" style="width: 305px" id="solicitud" placeholder="Ingrese numero de solicitud" data-ng-model="solicitud.id">
+			    <input type="text" class="form-control" style="width: 305px" id="solicitud" placeholder="Ingrese numero de solicitud" data-ng-model="solicitud.solicitud">
 				<label class="control-label" for="grupo">Grupo:</label>
 			   	<input type="text" class="form-control" style="width: 305px" id="grupo" placeholder="Ingrese descripcion del grupo" data-ng-model="solicitud.grupo">
 		   	</div>
@@ -15,7 +15,7 @@
  		<div class="form-group">
 			<label class="control-label col-sm-2" for="id">Id Cliente:</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="id" placeholder="Ingrese identificador del cliente" data-ng-model="cliente.id">
+		      <input type="text" class="form-control" id="id" placeholder="Ingrese identificador del cliente" data-ng-model="cliente.cliente">
 			</div>
 		</div>
  			<div class="form-group">
@@ -48,7 +48,7 @@
 	   </thead>
 	   <tbody>
 	     <tr data-ng-repeat="c in solicitud.clientes">
-	       <td>{{ c.id }}</td>
+	       <td>{{ c.cliente }}</td>
 	       <td>{{ c.nombre }}</td>
 	       <td>{{ c.monto | currency:"$":2 }}</td>
 	     </tr>
