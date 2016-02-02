@@ -3,24 +3,45 @@ package mx.redhat.findep.credito.web.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("serial")
 @XmlRootElement
+@Entity
+@SuppressWarnings("serial")
 public class Solicitud implements Serializable
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "solicitud_id")
 	private Long id;
-	private Set<Cliente> clientes;
+	private String solicitud;
 	private Double monto;
 	private String tipoRevisor;
 	private String grupo;
 	private String estatus;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "solicitud", cascade = CascadeType.ALL)
+	private Set<Cliente> clientes;
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getSolicitud() {
+		return solicitud;
+	}
+	public void setSolicitud(String solicitud) {
+		this.solicitud = solicitud;
 	}
 	public Set<Cliente> getClientes() {
 		return clientes;
